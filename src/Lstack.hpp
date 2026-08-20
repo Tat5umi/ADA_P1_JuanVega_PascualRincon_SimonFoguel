@@ -42,11 +42,11 @@ class Stack{
         using const_iterator = typename List<Object>::const_iterator;
 
         iterator begin(){
-            return myList.begin();
+            return ++(myList.begin());
         }
 
         const_iterator begin() const{
-            return myList.begin();
+            return ++(myList.begin());
         }
 
     private:

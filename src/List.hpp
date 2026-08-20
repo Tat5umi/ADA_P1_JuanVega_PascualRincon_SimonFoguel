@@ -19,21 +19,19 @@ class List{
     class const_iterator;
 
     List():
-    head{new Node}, theSize{0}{}
+    head{new Node}, tail{nullptr}, theSize{0}{}
 
     List(const List& rhs):
-    theSize{rhs.theSize}{
-        head = new Node;
-        auto itr1 = ++(rhs.begin());
-        for (auto itr2 = begin(); itr1.current != nullptr; ++itr2){
-            Node* newNode = new Node(*itr1, nullptr);
-            (itr2.current)->next = newNode;
-            itr1++;
-        }   
+    theSize{0}{
+      head = new Node;
+      for (auto itr1 = ++(rhs.begin()); itr1.current != nullptr; ++itr1){
+        push_back(*itr1);
+      }  
     }
 
     List(List&& rhs):
     head{std::exchange(rhs.head, nullptr)},
+    tail{std::exchange(rhs.tail, nullptr)},
     theSize{std::exchange(rhs.theSize, 0)}{}
 
     ~List(){
@@ -46,12 +44,14 @@ class List{
     List& operator= (const List& rhs){
         List temp = rhs;
         std::swap(head, temp.head);
+        std::swap(tail, temp.tail);
         std::swap(theSize, temp.theSize);
         return *this;
     }
 
     List& operator= (List&& rhs){
       std::swap(head, rhs.head);
+      std::swap(tail, rhs.tail);
       std::swap(theSize, rhs.theSize);
       return *this;
     }
@@ -59,31 +59,68 @@ class List{
     void push_front(const Object& obj){
       Node* newNode = new Node(obj, head->next);
       head->next = newNode;
+      if (empty()){
+        tail = newNode;
+      }
       theSize++;
     }
 
     void push_front(Object&& obj){
-        Node* newNode = new Node(std::move(obj), head->next);
-        head->next = newNode;
-        theSize++;
+      Node* newNode = new Node(std::move(obj), head->next);
+      head->next = newNode;
+      if (empty()){
+        tail = newNode;
+      }
+      theSize++;
+    }
+
+    void push_back(const Object& obj){
+      if (empty()){
+        push_front(obj);
+        return;
+      }
+      tail->next = new Node(obj, nullptr);
+      tail = tail->next;
+      theSize++;
+    }
+
+    void push_back(Object&& obj){
+      if (empty()){
+        push_front(std::move(obj));
+        return;
+      }
+      tail->next = new Node(std::move(obj), nullptr);
+      tail = tail->next;
+      theSize++;
     }
 
     void pop_front(){
-        if (empty()) {
-            throw std::runtime_error("attempted pop on an empty list");}
-        Node* old = head->next;
-        head->next = old->next;
+      if (empty()) {
+        throw std::runtime_error("attempted pop on an empty list");}
+      Node* old = head->next;
+      head->next = old->next;
 
-        delete old;
-        theSize--;
+      delete old;
+      theSize--;
+      if (empty()){
+        tail = nullptr;
+      }
     }
 
     Object& front(){
-        return *(++begin());
+      return *(++begin());
     }
 
     const Object& front() const{
         return *(++begin());
+    }
+
+    Object& back(){
+      return tail->data;
+    }
+
+    const Object& back() const{
+      return tail->data;
     }
 
     bool empty() const{
@@ -182,6 +219,7 @@ class List{
     };
 
     Node* head;
+    Node* tail;
     int theSize;
 
 };
