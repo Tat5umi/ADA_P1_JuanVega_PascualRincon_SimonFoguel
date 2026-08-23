@@ -5,11 +5,11 @@
 #include <utility>
 
 template<typename Object>
-class ArrayStack{
+class Array_Stack{
 
     public:
 
-        ArrayStack() = default;
+        Array_Stack() = default;
 
         void pop(){
             vec.pop_back();
