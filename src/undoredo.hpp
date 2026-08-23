@@ -18,7 +18,13 @@ class Documento{
                texto.replace(pos, cuantosQuitar, textoNuevo);
               }
              std::string Leer(size_t pos, size_t largo) const {
-                   return texto.substr(pos, largo);
+              if (pos > texto.size()){
+                throw std::runtime_error ("La posicion no esta en el documento");
+              }
+              if (pos + largo > texto.size()){
+                throw std::runtime_error ("La cantidad a leer excede el numero de caracteres del documento");
+                }
+                  return texto.substr(pos, largo);
                     }
       private:
               std::string texto;
