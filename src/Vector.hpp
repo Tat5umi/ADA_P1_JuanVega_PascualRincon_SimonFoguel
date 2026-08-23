@@ -13,7 +13,7 @@ class Vector{
         theCapacity{16}, theSize{0}, array{new Object[16]}{}
 
         explicit Vector(int capacity):
-        theCapacity{capacity + 16}, theSize{0}, array{new Object[capacity + 16]}{}
+        theCapacity{capacity + 16}, theSize{rhs.thesize}, array{new Object[capacity + 16]}{}
 
         Vector(const Vector& rhs):
         theCapacity{rhs.theCapacity}, theSize{0}, array{new Object[theCapacity]}{
