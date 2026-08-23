@@ -1,14 +1,14 @@
-#ifndef LSTACK_HPP
-#define LSTACK_HPP
+#ifndef STACK_LIST_HPP
+#define STACK_LIST_HPP
 #include <utility>
 #include "List.hpp"
 
 template<typename Object>
-class LinkedStack{
+class stack_list{
 
     public: 
 
-        LinkedStack() = default;
+        stack_list() = default;
 
         bool empty() const{
             return myList.empty();
