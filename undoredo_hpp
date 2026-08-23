@@ -1,1 +1,2 @@
-
+#ifndef UNDOREDO_HPP
+#define UNDOREDO_HPP
