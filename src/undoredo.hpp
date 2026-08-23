@@ -10,7 +10,7 @@ struct Registro{
 TipoOp tipo;
 size_t pos;
 std::string antes;
-std:: despues;
+std::string despues;
 };
 
 class Documento{
