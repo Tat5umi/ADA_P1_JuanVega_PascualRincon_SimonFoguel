@@ -11,7 +11,7 @@ TipoOp tipo;
 size_t pos;
 std::string antes;
 std:: despues;
-}
+};
 
 class Documento{
       public:
