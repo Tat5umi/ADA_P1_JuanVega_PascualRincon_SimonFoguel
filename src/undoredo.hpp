@@ -28,7 +28,7 @@ class Documento{
                 }
                   return texto.substr(pos, largo);
                     }
-               const std::string& Obtenertexto() {
+               const std::string& Obtenertexto() const {
                      return texto;
                }
 
