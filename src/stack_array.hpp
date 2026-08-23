@@ -1,15 +1,15 @@
-#ifndef VSTACK_HPP
-#define VSTACK_HPP
+#ifndef STACK_ARRAY_HPP
+#define STACK_ARRAY_HPP
 
 #include "Vector.hpp"
 #include <utility>
 
 template<typename Object>
-class stack_array{
+class ArrayStack{
 
     public:
 
-        stack_array() = default;
+        ArrayStack() = default;
 
         void pop(){
             vec.pop_back();
