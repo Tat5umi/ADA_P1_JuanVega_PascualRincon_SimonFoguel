@@ -10,13 +10,16 @@ class Documento{
               Documento() = default; 
               void Modificar(size_t pos, size_t cuantosQuitar, const std::string& textoNuevo) {
               if (pos > texto.size()){
-                throw std::runtime_error ("La posición no esta en el documento");
+                throw std::runtime_error ("La posicion no esta en el documento");
               }
               if (pos + cuantosQuitar > texto.size()){
                 throw std::runtime_error ("La cantidad a eliminar excede el numero de caracteres del documento");
                 }
                texto.replace(pos, cuantosQuitar, textoNuevo);
               }
+             std::string Leer(size_t pos, size_t largo) const {
+                   return texto.substr(pos, largo);
+                    }
       private:
               std::string texto;
 };
