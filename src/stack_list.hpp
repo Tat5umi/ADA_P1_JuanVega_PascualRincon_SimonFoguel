@@ -4,11 +4,11 @@
 #include "List.hpp"
 
 template<typename Object>
-class stack_list{
+class ListStack{
 
     public: 
 
-        stack_list() = default;
+        ListStack() = default;
 
         bool empty() const{
             return myList.empty();
