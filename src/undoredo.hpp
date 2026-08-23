@@ -5,6 +5,14 @@
 #include <stdexcept>
 #include <iostream>
 
+enum class tipoOp {Insert, Delete, Replace};
+struct Registro{
+TipoOp tipo;
+size_t pos;
+std::string antes;
+std:: despues;
+}
+
 class Documento{
       public:
               Documento() = default; 
