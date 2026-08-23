@@ -16,7 +16,7 @@ class Vector{
         theCapacity{capacity + 16}, theSize{0}, array{new Object[capacity + 16]}{}
 
         Vector(const Vector& rhs):
-        theCapacity{rhs.theCapacity}, theSize{rhs.thesize}, array{new Object[theCapacity]}{
+        theCapacity{rhs.theCapacity}, theSize{rhs.theSize}, array{new Object[theCapacity]}{
             for (int i = 0; i < rhs.theSize; ++i){
                 array[i] = rhs.array[i];
             }
