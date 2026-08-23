@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <iostream>
 
-enum class tipoOp {Insert, Delete, Replace};
+enum class TipoOp {Insert, Delete, Replace};
 struct Registro{
 TipoOp tipo;
 size_t pos;
