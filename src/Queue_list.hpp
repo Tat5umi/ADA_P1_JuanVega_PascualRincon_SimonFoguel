@@ -1,15 +1,15 @@
-#ifndef QUEUE_HPP
-#define QUEUE_HPP
+#ifndef QUEUE_LIST_HPP
+#define QUEUE_LIST_HPP
 
 #include <utility>
 #include "List.hpp"
 
 template<typename Object>
-class Queue{
+class LinkedQueue{
 
     public:
 
-        Queue() = default;
+        LinkedQueue() = default;
 
         void enqueue(const Object& obj){
             myList.push_back(obj);
