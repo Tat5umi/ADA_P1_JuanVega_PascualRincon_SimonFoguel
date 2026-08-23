@@ -1,17 +1,17 @@
-#ifndef CQUEUE_HPP
-#define CQUEUE_HPP
+#ifndef QUEUE_CIRCULAR_HPP
+#define QUEUE_CIRCULAR_HPP
 #include <stdexcept>
 
 
 template <typename Object>
-class Cqueue{
+class CircularQueue{
 
     public: 
 
-        Cqueue(int n):
+        CircularQueue(int n):
         array{new Object[n]}, begin{0}, end{-1}, theSize{0}, capacity{n}{}
 
-        ~Cqueue(){
+        ~CircularQueue(){
             delete[] array;
         }
 
