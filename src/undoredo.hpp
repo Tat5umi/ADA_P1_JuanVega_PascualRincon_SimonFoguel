@@ -44,10 +44,10 @@ class Documento{
               std::string texto;
 };
 
-Void Deshacer{Documento& doc, const Registro& reg} {
+void Deshacer(Documento& doc, const Registro& reg) {
     doc.Modificar (reg.pos, reg.despues.size(), reg.antes);
 }
 
-Void Rehacer{Documento& doc, const Registro& reg} {
+void Rehacer(Documento& doc, const Registro& reg) {
     doc.Modificar (reg.pos, reg.antes.size(), reg.despues);
 #endif
