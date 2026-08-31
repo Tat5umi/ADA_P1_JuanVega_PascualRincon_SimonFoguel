@@ -6,6 +6,8 @@
 #include <sstream>
 #include <fstream>
 #include "Vector.hpp"
+#include "stack_array.hpp"
+#include "stack_list.hpp"
 
 enum class TipoOp {Insert, Delete, Replace};
 
@@ -173,11 +175,12 @@ struct ResultadoLectura {
         return resultado;
  }
 
+template <typename Pila>
 class motor {
 public:
       void AplicarEdicion(const Evento& evento){
             if (evento.cuantos == 0 && evento.contenido.empty()){
-                  log.push_back("edicion nula, se ignora);
+                  log.push_back("edicion nula, se ignora");
                   return;
                         }
             std::string antes = doc.leer(evento.pos, evento.cuantos);
