@@ -189,6 +189,28 @@ public:
             redo.clear();
             }
 
+     void HacerUndo(){
+           if(undo.empty()){
+                 log.push_back("Pila vacia, UNDO sin efecto");
+           }
+           Registro reg = undo.top();
+           undo.pop();
+           Deshacer(doc, reg);
+           redo.push(reg);
+           log.push_back("UNDO aplicado");
+     }
+
+     void HacerEdo(){
+           if(redo.empty()){
+                 log.push_back("Pila vacia, REDO sin efecto");
+           }
+           Registro reg = redo.top();
+           redo.pop();
+           Rehacer(doc, reg);
+           undo.push(reg);
+           log.push_back("REDO aplicado");
+     }
+
 private: 
       Documento doc;
       Pila undo;
