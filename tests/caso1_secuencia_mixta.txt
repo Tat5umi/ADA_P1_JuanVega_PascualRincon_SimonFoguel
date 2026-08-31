@@ -1,7 +1,8 @@
 # Caso 1 - Secuencia normal mixta
-# Ejercita INSERT, DELETE y REPLACE junto con UNDO y REDO
-EDIT INSERT 0 Hola Mundo
-EDIT DELETE 4,6
+# Ejercita INSERT, DELETE y REPLACE junto con UNDO y REDO.
+EDIT INSERT 0 hola mundo
+EDIT DELETE 4 6
 EDIT INSERT 4 , que tal
 UNDO
-EDIT REPLACE 0,4 chau
+EDIT REPLACE 0 4 chau
+REDO
