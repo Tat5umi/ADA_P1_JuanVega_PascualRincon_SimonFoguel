@@ -105,7 +105,7 @@ inline Evento LeerEvento(const std::string& linea){
                   e.clase = TipoEvento::Edicion;
                   e.op = TipoOp::Insert;
                   e.pos = pos;
-                  e.cuantos = cuantos;
+                  e.cuantos = 0;
                   e.contenido = contenido;
                   return e; 
             } else if (tipo == "DELETE"){
