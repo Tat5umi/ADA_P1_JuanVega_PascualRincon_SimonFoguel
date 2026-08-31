@@ -126,7 +126,7 @@ class Vector{
 
         void resize(){
             int newCapacity = (theCapacity == 0) ? 16 : theCapacity * 2;
-            new Object[newCapacity]
+            Object* newArray = new Object[newCapacity]
             for(int i = 0; i < theSize; ++i){
                 newArray[i] = std::move(array[i]);
             }
