@@ -8,19 +8,19 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include "undoredo:hpp"
+#include "undoredo.hpp"
 
 const int REPETICIONES = 5;
 
 struct Medicion {
   double media;
   double desviacion;
-  int efectivos
+  int efectivos;
   int noOps;
 
 template <typename Pila>
 Medicion medir(const Vector<Evento>& eventos){
-  double tiempo[REPETICIONES];
+  double tiempos[REPETICIONES];
   int efectivos = 0;
   int noOps = 0;
 
@@ -31,16 +31,16 @@ Medicion medir(const Vector<Evento>& eventos){
     motor.Procesar(eventos);
     auto fin = std::chrono::steady_clock::now();
 
-    tiempos[r] = std::chrorno::duration<double, std::milli > (fin - inicio).count();
-    efectivos = motor.Efectivos
-    noOps = motor.NoOps
+    tiempos[r] = std::chrono::duration<double, std::milli > (fin - inicio).count();
+    efectivos = motor.Efectivos();
+    noOps = motor.NoOps();
       }
 
   double suma = 0.0;
   for (int r = 0; r < REPETICIONES; ++r){
     suma += tiempos[r];
   }
-  double media = suma / Repeticiones;
+  double media = suma / REPETICIONES;
 
   double acumulado = 0.0;
   for (int r = 0; r < REPETICIONES; ++r){
@@ -85,17 +85,9 @@ int main(){
       imprimirFila(n, "arreglo", medir<ArrayStack<Registro>>(datos.eventos));
       imprimirFila(n, "lista", medir<LinkedStack<Registro>>(datos.eventos));
    
-    } catch (const std:exception& error) {
+    } catch (const std::exception& error) {
       std::cerr << "error con " << ruta << ": " << error.what() << "\n";
     }
   }
   return 0;
   }
-
-
-      
-
-
-
-
-    
