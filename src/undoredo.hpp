@@ -4,6 +4,7 @@
 #include <string>
 #include <stdexcept>
 #include <sstream>
+#include <fstream>
 #include "Vector.hpp"
 
 enum class TipoOp {Insert, Delete, Replace};
@@ -164,11 +165,12 @@ struct ResultadoLectura {
                   continue;
              }
              try {
-                  resultado.eventos.pushback("linea " + std:to_string(numero) + ": " error.what());
+                   resultados.eventos.push_back(LeerEvento(linea));
+             } catch (const std::exception& error) {
+                   resultado.errores.push_back("linea " + std::to_string(numero) + ": " + error.what());
              }
         }
         return resultado;
  }
-
 
 #endif
