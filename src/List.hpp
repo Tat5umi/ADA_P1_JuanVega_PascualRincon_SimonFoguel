@@ -150,7 +150,7 @@ class List{
       return iterator(nullptr);
     }
 
-    const_iterator end(){
+    const_iterator end() const{
       return const_iterator(nullptr);
     }
 
@@ -182,11 +182,11 @@ class List{
             return old;
         }
 
-bool operator==(iterator& rhs){
+bool operator==(const iterator& rhs) const{
           return current == rhs.current;
         }
 
-        bool operator!=(iterator& rhs){
+        bool operator!=(const iterator& rhs) const{
           return !(*this == rhs);
         }
 
