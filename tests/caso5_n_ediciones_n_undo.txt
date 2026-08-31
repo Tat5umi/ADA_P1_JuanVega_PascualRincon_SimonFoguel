@@ -1,1 +1,12 @@
-
+# Caso 5 - N ediciones seguidas de N UNDO consecutivos
+# Documento final vacio, Undo en 0, Redo en 5.
+EDIT INSERT 0 a
+EDIT INSERT 1 b
+EDIT INSERT 2 c
+EDIT INSERT 3 d
+EDIT INSERT 4 e
+UNDO
+UNDO
+UNDO
+UNDO
+UNDO
