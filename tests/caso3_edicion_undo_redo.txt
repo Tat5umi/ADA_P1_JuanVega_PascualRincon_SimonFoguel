@@ -1,1 +1,4 @@
-
+# Caso 3 - Una edicion, UNDO, REDO
+EDIT INSERT 0 hola
+UNDO
+REDO
