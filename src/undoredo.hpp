@@ -4,6 +4,7 @@
 #include <string>
 #include <stdexcept>
 #include <sstream>
+#include "Vector.hpp"
 
 enum class TipoOp {Insert, Delete, Replace};
 
@@ -33,17 +34,17 @@ class Documento{
                 throw std::runtime_error ("La posicion no esta en el documento");
               }
               if (pos + cuantosQuitar > texto.size()){
-                throw std::runtime_error ("La cantidad a eliminar excede el numero de caracteres del documento");
+                throw std::runtime_error ("la cantidad a eliminar excede el numero de caracteres del documento");
                 }
                texto.replace(pos, cuantosQuitar, textoNuevo);
               }
 
              std::string Leer(size_t pos, size_t largo) const {
               if (pos > texto.size()){
-                throw std::runtime_error ("La posicion no esta en el documento");
+                throw std::runtime_error ("la posicion no esta en el documento");
               }
               if (pos + largo > texto.size()){
-                throw std::runtime_error ("La cantidad a leer excede el numero de caracteres del documento");
+                throw std::runtime_error ("la cantidad a leer excede el numero de caracteres del documento");
                 }
                   return texto.substr(pos, largo);
                     }
@@ -140,10 +141,34 @@ inline Evento LeerEvento(const std::string& linea){
                   throw std::runtime_error ("tipo de edicion desconocido: " + tipo);
             }            
       } else {
-          throw std::runtime_error("Comando desconocido: " + comando);
+          throw std::runtime_error("comando desconocido: " + comando);
       }
 }
 
+struct ResultadoLectura {
+      Vector<Evento> eventos;
+      Vector<std::string> errores;
+};
+
+ inline ResultadoLectura LeerArchivo(const std::string& ruta){
+       std::ifstream archivo(ruta);
+       if (!archivo){
+            throw std::runtime_error("no se puede abrir el archivo: " + ruta); 
+       }
+       ResultadoLectura resultado;
+       std::string linea;
+       int numero = 0;
+       while (std::getline(archivo, linea)){
+             ++numero;
+             if (linea.empty() || linea.front() == '#' ){
+                  continue;
+             }
+             try {
+                  resultado.eventos.pushback("linea " + std:to_string(numero) + ": " error.what());
+             }
+        }
+        return resultado;
+ }
 
 
 #endif
