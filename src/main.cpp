@@ -9,7 +9,7 @@ int main(int argc, char* argv[]){
   try {
        ResultadoLectura datos = LeerArchivo(argv[1]);
        Motor<ArrayStack<Registro>> motor;
-       motor.Procesar(datos.evento);
+       motor.Procesar(datos.eventos);
        Reportar(motor, datos.errores, std::cout);
   } catch(const std::exception& error) {
        std::cerr <<"error: " << error.what() << "\n";
