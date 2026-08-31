@@ -99,10 +99,16 @@ class Vector{
         }
 
         Object& back(){
+            if (empty()){
+                throw std::runtime_error("back sobre un vector vacio");
+            }
             return array[theSize - 1];
         }
 
         const Object& back() const{
+            if (empty()){
+                throw std::runtime_error("back sobre un vector vacio");
+            }
             return array[theSize - 1];
         }
 
