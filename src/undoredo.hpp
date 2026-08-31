@@ -213,6 +213,23 @@ public:
            log.push_back("REDO aplicado");
      }
 
+     void Procesar(const Vector<Evento>& eventos){
+           for (int i = 0; i < eventos.size(); i++){
+                 if (eventos[i].clase == TipoEvento:: Edicion){
+                       AplicarEdicion(eventos[i]);
+                 } else if (eventos[i].clase == TipoEvento:: Undo){
+                       HacerUndo();
+                 } else {
+                       HacerRedo();
+                 }
+           }
+     }
+                       
+     const std::string& TextoFinal() const {return doc.ObtenerTexto();}
+     const Vector<std::string>& Log() const {return log;}
+     int TamUndo() const {return undo.size();}
+     int TamRedo() const {return redo.size();}
+
 private: 
       Documento doc;
       Pila undo;
