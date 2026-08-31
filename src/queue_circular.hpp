@@ -12,10 +12,10 @@ class CircularQueue{
         CircularQueue(int n):
         array{new Object[validar(n)]}, begin{0}, end{-1}, theSize{0}, capacity{n}{}
         
-        CircularQueue(Const CircularQueue& rhs):
-        array{new Object[rhs.capacity]}, begin{rhs.begin}, end{rhs.end], theSize{rhs.theSize}, capacity{rhs.capacity}{
+        CircularQueue(const CircularQueue& rhs):
+        array{new Object[rhs.capacity]}, begin{rhs.begin}, end{rhs.end}, theSize{rhs.theSize}, capacity{rhs.capacity}{
             for (int i=0; i < capacity; ++i){
-                array[i] = rhs.array[i]
+                array[i] = rhs.array[i];
                     }
         }
 
@@ -37,7 +37,7 @@ class CircularQueue{
 
         const Object& front() const{
             if (empty()){
-                throw std::runtime_error("front sobre una cola vacia")
+                throw std::runtime_error("front sobre una cola vacia");
                     }
             return array[begin];
         }
@@ -45,11 +45,12 @@ class CircularQueue{
 
          const Object& back() const{
             if (empty()){
-                throw std::runtime_error("back sobre una cola vacia")
+                throw std::runtime_error("back sobre una cola vacia");
                     }
             return array[end];
+         }
 
-        void enqueue(Object n){
+        const Object& n{
             if (full()){
                 throw std::runtime_error("attempted enqueue on a full queue");
             }
@@ -82,9 +83,9 @@ class CircularQueue{
 
     private:
 
-        static int validar (int n){
+        static int validar(int n){
             if (n <= 0){
-                throw std::runtime_error("la capacidad de la cola debe ser positiva");
+                throw std::invalid_argument("la capacidad de la cola debe ser positiva");
             }
             return n;
         }
