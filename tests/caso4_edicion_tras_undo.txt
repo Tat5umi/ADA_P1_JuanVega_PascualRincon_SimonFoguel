@@ -1,1 +1,7 @@
-
+# Caso 4 - Edicion inmediatamente despues de un UNDO
+# La edicion de la linea 6 debe vaciar la pila Redo: el REDO final es no-op.
+EDIT INSERT 0 primero
+EDIT INSERT 7 segundo
+UNDO
+EDIT INSERT 7 tercero
+REDO
