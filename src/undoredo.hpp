@@ -165,7 +165,7 @@ struct ResultadoLectura {
                   continue;
              }
              try {
-                   resultados.eventos.push_back(LeerEvento(linea));
+                   resultado.eventos.push_back(LeerEvento(linea));
              } catch (const std::exception& error) {
                    resultado.errores.push_back("linea " + std::to_string(numero) + ": " + error.what());
              }
