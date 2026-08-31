@@ -3,7 +3,6 @@
 
 #include <string>
 #include <stdexcept>
-#include <iostream>
 
 enum class TipoOp {Insert, Delete, Replace};
 struct Registro{
@@ -36,7 +35,7 @@ class Documento{
                 }
                   return texto.substr(pos, largo);
                     }
-               const std::string& Obtenertexto() const {
+               const std::string& ObtenerTexto() const {
                      return texto;
                }
 
@@ -44,11 +43,11 @@ class Documento{
               std::string texto;
 };
 
-void Deshacer(Documento& doc, const Registro& reg) {
+inline void Deshacer(Documento& doc, const Registro& reg) {
     doc.Modificar (reg.pos, reg.despues.size(), reg.antes);
 }
 
-void Rehacer(Documento& doc, const Registro& reg) {
+inline void Rehacer(Documento& doc, const Registro& reg) {
     doc.Modificar (reg.pos, reg.antes.size(), reg.despues);
 }
 
