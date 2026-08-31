@@ -1,1 +1,8 @@
-
+# Caso 7 - Crecimiento de capacidad de la pila sobre arreglo
+# 20 ediciones superan la capacidad inicial de 16 y fuerzan un resize.
+# Los 20 UNDO verifican que ningun registro se perdio al redimensionar.
+EDIT INSERT 0 x
+EDIT INSERT 1 x
+...hasta EDIT INSERT 19 x
+UNDO
+...veinte veces
