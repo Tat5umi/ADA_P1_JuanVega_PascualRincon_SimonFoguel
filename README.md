@@ -160,7 +160,41 @@ Las dos representaciones de pila no se distinguen en esta medición. Con el docu
 
 La desviación estándar del arreglo es más de diez veces la de la lista en el tamaño mayor. Esa varianza es la firma del crecimiento de capacidad por duplicación: las corridas en las que toca copiar el bloque completo tardan sensiblemente más que las demás. Es evidencia medida del comportamiento amortizado.
 
-Casos de prueba
+## Resumen de resultados — Problema 2
+
+Datos derivados de los cuatro CSV en results/, generados por src/buffer.cpp sobre paquetes_n1000000.txt (semilla 42). Cada experimento corresponde a una fila de data_buffer/parameters.txt.
+
+Configuraciones evaluadas
+
+| Exp. | C (capacidad) | T (ventana, ms) | L (límite por ventana) | R (tasa de servicio) |
+|---|---|---|---|---|
+| 1 | 200 | 1000 | 150 | 500 |
+| 2 | 150 | 800 | 200 | 100 |
+| 3 | 250 | 600 | 150 | 150 |
+| 4 | 100 | 700 | 200 | 700 |
+
+Resultados agregados
+
+Sobre 999 987 paquetes procesados en cada configuración.
+
+| Exp. | Aceptados | Rechazados por búfer lleno | Rechazados por tasa | Ocupación máxima |
+|---|---|---|---|---|
+| 1 | 262 985 (26.3 %) | 0 (0.0 %) | 737 002 (73.7 %) | 14 |
+| 2 | 224 460 (22.4 %) | 775 298 (77.5 %) | 229 (0.0 %) | 150 |
+| 3 | 337 000 (33.7 %) | 661 803 (66.2 %) | 1 184 (0.1 %) | 250 |
+| 4 | 499 666 (50.0 %) | 0 (0.0 %) | 500 321 (50.0 %) | 6 |
+
+Interpretación
+
+Los dos mecanismos de rechazo son casi mutuamente excluyentes. En ninguna configuración ambos actúan de forma apreciable a la vez: o domina el límite de tasa (experimentos 1 y 4) o domina la saturación del búfer (experimentos 2 y 3). Cuál de los dos manda lo decide la relación entre la tasa de servicio R y la tasa de llegada, no los valores de C ni de L por separado.
+
+Cuando R es alta, el búfer nunca se llena. En los experimentos 1 y 4, con R igual a 500 y 700, la ocupación máxima fue de 14 y 6 paquetes frente a capacidades de 200 y 100. El servicio drena el búfer más rápido de lo que llega el tráfico, así que la condición de búfer lleno nunca se alcanza y todo el filtrado recae en el limitador por ventana deslizante.
+
+Cuando R es baja, el búfer se satura y el limitador queda inactivo. En los experimentos 2 y 3, con R igual a 100 y 150, la ocupación máxima alcanzó exactamente la capacidad configurada, 150 y 250, y entre el 66 % y el 77 % de los paquetes se descartaron por saturación. El limitador de tasa apenas rechazó unos cientos, porque los paquetes ya se estaban perdiendo antes de llegar a esa comprobación.
+
+La ocupación máxima igual a C es la evidencia de que el búfer se llenó de verdad. En los experimentos 2 y 3 el valor coincide con la capacidad, lo que confirma que la condición de cola llena se ejercitó y que el descarte por saturación no es teórico. Es el caso límite «búfer exactamente lleno más un paquete adicional» de la Sección 11, observado sobre datos reales y no solo en la prueba dedicada.
+
+## Casos de prueba
 
 Los siete casos obligatorios de la Sección 11 están en tests/, uno por archivo, en el formato de entrada del Problema 1. Cada archivo lleva comentarios que describen qué verifica.
 
