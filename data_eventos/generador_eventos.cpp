@@ -23,9 +23,9 @@ void generar(int n, const std::string& ruta){
   
   std::mt19937  rng(SEMILLA);
   std::uniform_int_distribution<int> dadoAccion(1,100);
-  std::uniform_int_distribution<int> dadoLetra(1,25);
+  std::uniform_int_distribution<int> dadoLetra(0,25);
 
-  salida <<"# generado con semilla " << SEMILLA << ", n = " << "\n";
+  salida <<"# generado con semilla " << SEMILLA << ", n = " << n << "\n";
 
   long long  largo = 0;
   std::vector<long long> undo;
@@ -36,17 +36,17 @@ void generar(int n, const std::string& ruta){
 
     if(accion <= 60){
       std::uniform_int_distribution<long long> dadoPos(0, largo);
-      long long pos = dadoPos(rng)
+      long long pos = dadoPos(rng);
       char letra = 'a' + dadoLetra(rng);
       salida <<"EDIT INSERT " << pos << " " << letra << "\n";
       largo += 1;
       undo.push_back(+1);
       redo.clear();
 
-    } else if (accion <= 75 && largo > 0)  
+    } else if (accion <= 75 && largo > 0){
       std::uniform_int_distribution<long long> dadoPos(0, largo - 1);
-      long long pos = dadoPos(rng)
-      salida <<"EDIT DELETE " << pos << " " << " 1\n";
+      long long pos = dadoPos(rng);
+      salida <<"EDIT DELETE " << pos << " 1\n";
       largo -= 1;
       undo.push_back(-1);
       redo.clear();
@@ -70,7 +70,7 @@ void generar(int n, const std::string& ruta){
       }
     }
   }
-  std::cout <<"generado " << ruta << " con " << n << "eventos\n";
+  std::cout <<"generado " << ruta << " con " << n << " eventos\n";
 }
 
 int main(){
