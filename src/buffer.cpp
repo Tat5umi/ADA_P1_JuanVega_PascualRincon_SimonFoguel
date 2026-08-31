@@ -111,7 +111,8 @@ void processData(int c, int t, int l, int r, int file){
         }
 
         if (!buffer.full() && purgeExpired(time, timestamps)){
-            buffer.enqueue(std::max(static_cast<double>(time), buffer.back()) + bytes/R);
+            double salidaAnterior = buffer.empty() ? static_cast<double>(time) : buffer.back();
+            buffer.enqueue(std::max(static_cast<double>(time), salidaAnterior) + bytes/R);
             timestamps.enqueue(time);
             ++aceptados;
         } else if (buffer.full()){
