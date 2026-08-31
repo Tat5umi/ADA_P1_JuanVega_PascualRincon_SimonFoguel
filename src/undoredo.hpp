@@ -93,7 +93,7 @@ inline Evento LeerEvento(const std::string& linea){
             }
             size_t pos;
             if  (!(flujo >> pos)){
-                  throw std::runtime_error ("falta la posicion");
+                  throw std::runtime_error ("posicion invalida o ausente");
             }
             if (tipo == "INSERT"){
                   std::string contenido;
@@ -137,10 +137,10 @@ inline Evento LeerEvento(const std::string& linea){
                   e.contenido = contenido;
                   return e; 
             } else {
-                  throw std::runtime_error ("tipo de edicion desconocido:" + tipo);
+                  throw std::runtime_error ("tipo de edicion desconocido: " + tipo);
             }            
       } else {
-          throw std::runtime_error("Comando desconocido:" + comando);
+          throw std::runtime_error("Comando desconocido: " + comando);
       }
 }
 
