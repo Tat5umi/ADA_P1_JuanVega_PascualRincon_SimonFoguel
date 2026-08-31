@@ -1,6 +1,7 @@
 #ifndef QUEUE_CIRCULAR_HPP
 #define QUEUE_CIRCULAR_HPP
 #include <stdexcept>
+#include <utility>
 
 
 template <typename Object>
@@ -9,25 +10,44 @@ class CircularQueue{
     public: 
 
         CircularQueue(int n):
-        array{new Object[n]}, begin{0}, end{-1}, theSize{0}, capacity{n}{}
+        array{new Object[validar(n)]}, begin{0}, end{-1}, theSize{0}, capacity{n}{}
+        
+        CircularQueue(Const CircularQueue& rhs):
+        array{new Object[rhs.capacity]}, begin{rhs.begin}, end{rhs.end], theSize{rhs.theSize}, capacity{rhs.capacity}{
+            for (int i=0; i < capacity; ++i){
+                array[i] = rhs.array[i]
+                    }
+        }
+
+        CircularQueue& operator=(const CircularQueue& rhs){
+             if (this == &rhs) return *this;
+             CircularQueue temp = rhs;
+             std::swap(array, temp.array);
+             std::swap(begin, temp.begin);
+             std::swap(end, temp.end);
+             std::swap(theSize, temp.theSize);
+             std::swap(capacity, temp.capacity);
+             return *this;
+        }
+        
 
         ~CircularQueue(){
             delete[] array;
         }
 
-        Object front(){
+        const Object& front() const{
             if (empty()){
-                return Object();
-            }
+                throw std::runtime_error("front sobre una cola vacia")
+                    }
             return array[begin];
         }
+        
 
-        Object back(){
+         const Object& back() const{
             if (empty()){
-                return Object();
-            }
+                throw std::runtime_error("back sobre una cola vacia")
+                    }
             return array[end];
-        }
 
         void enqueue(Object n){
             if (full()){
@@ -46,10 +66,6 @@ class CircularQueue{
             theSize--;
         }
 
-        void move(int& index){
-            index = (index + 1) % capacity;
-        }
-
         int size() const{
             return theSize;
         }
@@ -66,6 +82,17 @@ class CircularQueue{
 
     private:
 
+        static int validar (int n){
+            if (n <= 0){
+                throw std::runtime_error("la capacidad de la cola debe ser positiva");
+            }
+            return n;
+        }
+
+        void move(int& index){
+            index = (index + 1) % capacity;
+        }
+                
         Object* array;
         int begin;
         int end;
