@@ -3,6 +3,7 @@
 
 #include <string>
 #include <stdexcept>
+#include <sstream>
 
 enum class TipoOp {Insert, Delete, Replace};
 
@@ -62,6 +63,31 @@ inline void Rehacer(Documento& doc, const Registro& reg) {
     doc.Modificar (reg.pos, reg.antes.size(), reg.despues);
 }
 
-inline Evento LeerEvento(const std::string& linea);
+inline Evento LeerEvento(const std::string& linea){
+
+      std::istringstream flujo(linea);
+      std::string comando;
+
+      if (!(flujo >> comando)) {  
+         throw std::runtime_error ("linea vacia");
+      }
+
+      if (comando == "UNDO") {
+          Evento e;
+          e.clase = TipoEvento::Undo;
+          e.op = TipoOp::Insert;
+          e.pos = 0;
+          e.cuantos = 0;
+          return e; 
+      } else if (comando == "REDO") {
+          Evento e;
+          e.clase = TipoEvento::Redo;
+          e.op = TipoOp::Insert;
+          e.pos = 0;
+          e.cuantos = 0;
+          return e; 
+      } else {
+          throw std::runtime_error("Comando desconocido:" + comando);
+      }
 
 #endif
