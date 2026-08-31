@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include "undoredo.hpp"
+#include "../src/undoredo.hpp"
 
 const int REPETICIONES = 5;
 
