@@ -15,6 +15,12 @@ class ArrayStack{
             vec.pop_back();
         }
 
+        void  clear(){
+            while(!empty()){
+                pop();
+            }
+        }
+
         void push(const Object& obj){
             vec.push_back(obj);
         }
