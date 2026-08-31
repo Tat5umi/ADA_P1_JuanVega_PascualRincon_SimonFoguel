@@ -1,15 +1,15 @@
-EDA_P1_PascualRincon_SimonFoguel
+# EDA_P1_Foguel_Rincon
 
-Práctica 1 de Estructuras de Datos y Algoritmos.
+## Práctica 1 de Estructuras de Datos y Algoritmos.
 
 Pilas y colas en sistemas reales: undo/redo de un editor de código y control de tráfico en un firewall. Implementación desde cero y análisis formal de complejidad.
 
-Integrantes
+## Integrantes
 
 - Simón Foguel Giraldo
 - Pascual Rincón Cardona
 
-Descripción
+## Descripción
 
 El proyecto resuelve dos problemas sobre estructuras unidimensionales implementadas desde cero, sin usar std::stack, std::queue, std::deque ni std::list.
 
@@ -19,7 +19,7 @@ Problema 2 — Búfer y limitador de tasa de un firewall: Simula la recepción d
 
 Ambas estructuras están implementadas en dos representaciones distintas (arreglo dinámico y lista enlazada) sobre la misma interfaz, para contrastar el TAD con sus implementaciones concretas.
 
-Estructura del repositorio
+## Estructura del repositorio
 
 
 EDA_P1_PascualRincon_SimonFoguel/
@@ -49,12 +49,12 @@ EDA_P1_PascualRincon_SimonFoguel/
 
 Todas las estructuras son plantillas de C++ (template<typename T>), por lo que se implementan enteramente en archivos .hpp y no tienen .cpp asociado. Esta es la práctica estándar del lenguaje: el compilador necesita ver la definición completa en cada unidad de traducción que instancie la plantilla.
 
-Requisitos
+## Requisitos
 
 - Compilador con soporte de C++17 (probado con g++ 13 en Linux y g++ 16 en MinGW-w64 sobre Windows)
 - Python 3 con pandas y matplotlib, únicamente para regenerar las gráficas del Problema 2
 
-Compilación
+## Compilación
 
 El proyecto produce tres ejecutables independientes. No usar src/*.cpp con comodín**: main.cpp, experimentos.cpp y buffer.cpp tienen cada uno su propia función main, y compilarlos juntos falla con símbolo duplicado.
 
@@ -67,7 +67,7 @@ bash
 g++ -std=c++17 -Wall -Wextra -fsanitize=address,undefined -g -o undoredo src/main.cpp
 
 
-Ejecución
+## Ejecución
 
 Problema 1
 
@@ -101,7 +101,7 @@ cd src && ./buffer
 
 Lee los parámetros C, T, L y R desde data_buffer/parameters.txt (una configuración por línea) y el archivo de paquetes desde data_buffer/.
 
-Reproducción de los experimentos
+## Reproducción de los experimentos
 
 Datos del Problema 1 — semilla 6012009
 
@@ -126,7 +126,7 @@ bash
 cd data_buffer
 ./generate_all.sh
 
-Medición
+## Medición
 
 bash
 ./experimentos > results/experimentos_p1.txt
@@ -137,7 +137,7 @@ Reloj utilizado. Se mide con std::chrono::steady_clock y no con high_resolution_
 
 La lectura del archivo queda fuera del cronómetro. Incluirla mediría el disco, que domina el tiempo por órdenes de magnitud sobre las operaciones de pila. El objeto Motor se construye dentro del bucle de repeticiones, para que cada corrida parta de un documento vacío y pilas vacías, pero antes de arrancar el reloj, para no medir su construcción.
 
-Resumen de resultados — Problema 1
+## Resumen de resultados — Problema 1
 
 Cuatro tamaños, cinco repeticiones cada uno, en milisegundos.
 
@@ -173,7 +173,7 @@ Los siete casos obligatorios de la Sección 11 están en tests/, uno por archivo
 | caso6_redo_de_mas.txt | Más REDO que elementos disponibles |
 | caso7_crecimiento_capacidad.txt | Veinte ediciones fuerzan el redimensionamiento del arreglo |
 
-Decisiones de diseño documentadas
+## Decisiones de diseño documentadas
 
 - Deltas en vez de instantáneas. Cada registro del historial guarda solo el fragmento destruido y el que quedó en su lugar, con costo espacial proporcional al cambio y no al documento. Guardar una copia completa por operación costaría Θ(n·L).
 - Primitiva única de edición. INSERT, DELETE y REPLACE son casos particulares de una sola operación Modificar(pos, cuantosQuitar, textoNuevo), de modo que el motor no ramifica por tipo de edición en ningún punto.
