@@ -86,8 +86,62 @@ inline Evento LeerEvento(const std::string& linea){
           e.pos = 0;
           e.cuantos = 0;
           return e; 
+      } else if (comando == "EDIT"){
+            std::string tipo;
+            if  (!(flujo >> tipo)){
+                  throw std::runtime_error ("falta el tipo de edicion");
+            }
+            size_t pos;
+            if  (!(flujo >> pos)){
+                  throw std::runtime_error ("falta la posicion");
+            }
+            if (tipo == "INSERT"){
+                  std::string contenido;
+                  std::getline(flujo, contenido);
+                  if(!contenido.empty() && contenido.front() == ' '){
+                        contenido.erase(0,1);
+                  }
+                  Evento e;
+                  e.clase = TipoEvento::Edicion;
+                  e.op = TipoOp::Insert;
+                  e.pos = 0;
+                  e.cuantos = 0;
+                  return e; 
+            } else if (tipo == "DELETE"){
+                  size_t cuantos;
+                  if  (!(cuantos >> tipo)){
+                        throw std::runtime_error ("falta la cantidad a borrar");
+                  }
+                  Evento e;
+                  e.clase = TipoEvento::Edicion;
+                  e.op = TipoOp::Delete;
+                  e.pos = 0;
+                  e.cuantos = 0;
+                  return e; 
+            } else if (tipo == "REPLACE") {
+                  size_t cuantos;
+                  if  (!(cuantos >> tipo)){
+                        throw std::runtime_error ("falta la cantidad a remplazar");
+                  }
+                  std::string contenido;
+                  std::getline(flujo, contenido);
+                  if(!contenido.empty() && contenido.front() == ' '){
+                        contenido.erase(0,1);
+                  }
+                  Evento e;
+                  e.clase = TipoEvento::Edicion;
+                  e.op = TipoOp::Replace;
+                  e.pos = 0;
+                  e.cuantos = 0;
+                  return e; 
+            } else {
+                  throw std::runtime_error ("tipo de edicion desconocido:" + tipo);
+            }            
       } else {
           throw std::runtime_error("Comando desconocido:" + comando);
       }
+}
+
+
 
 #endif
