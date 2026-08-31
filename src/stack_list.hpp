@@ -38,6 +38,12 @@ class LinkedStack{
             myList.pop_front();
         }
 
+        void  clear(){
+            while(!empty()){
+                pop();
+            }
+        }
+
         using iterator = typename List<Object>::iterator;
         using const_iterator = typename List<Object>::const_iterator;
 
@@ -47,6 +53,14 @@ class LinkedStack{
 
         const_iterator begin() const{
             return ++(myList.begin());
+        }
+
+        iterator end(){
+            return myList.end();
+        }
+
+        const_iterator end() const{
+            return myList.end();
         }
 
     private:
