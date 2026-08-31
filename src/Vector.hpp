@@ -58,18 +58,6 @@ class Vector{
             return *this;
         }
 
-        void resize(){
-            int newCapacity = (theCapacity == 0) ? 16 : theCapacity * 2;
-            Object* newArray = new Object[theCapacity];
-            for(int i = 0; i < theSize; ++i){
-                newArray[i] = std::move(array[i]);
-            }
-
-            theCapacity = theCapacity*2;
-            delete[] array;
-            array = newArray;
-        }
-
         bool empty() const{
             return theSize == 0;
         }
@@ -135,6 +123,18 @@ class Vector{
         
 
     private:
+
+        void resize(){
+            int newCapacity = (theCapacity == 0) ? 16 : theCapacity * 2;
+            Object* newArray = new Object[theCapacity];
+            for(int i = 0; i < theSize; ++i){
+                newArray[i] = std::move(array[i]);
+            }
+
+            theCapacity = theCapacity;
+            delete[] array;
+            array = newArray;
+        }
 
         int theCapacity;
         int theSize;
