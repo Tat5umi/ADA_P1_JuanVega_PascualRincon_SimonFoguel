@@ -22,8 +22,7 @@ class List{
     head{new Node}, tail{nullptr}, theSize{0}{}
 
     List(const List& rhs):
-    theSize{0}{
-      head = new Node;
+    head{new Node}, tail{nullptr}, theSize{0}{
       for (auto itr1 = ++(rhs.begin()); itr1.current != nullptr; ++itr1){
         push_back(*itr1);
       }  
@@ -108,18 +107,30 @@ class List{
     }
 
     Object& front(){
+      if (empty()){
+        throw std::runtime_error("front sobre una lista vacia");
+      }
       return *(++begin());
     }
 
-    const Object& front() const{
-        return *(++begin());
-    }
+     const Object& front() const{
+      if (empty()){
+        throw std::runtime_error("front sobre una lista vacia");
+      }
+      return *(++begin());
+    }    
 
-    Object& back(){
+      Object& back(){
+       if (empty()){
+         throw std::runtime_error("back sobre una lista vacia");
+      }
       return tail->data;
     }
 
-    const Object& back() const{
+      const Object& back() const{
+       if (empty()){
+         throw std::runtime_error("back sobre una lista vacia");
+      }
       return tail->data;
     }
 
@@ -133,6 +144,14 @@ class List{
 
     const_iterator begin() const{
         return const_iterator(head);
+    }
+
+    iterator end(){
+      return iterator(nullptr);
+    }
+
+    const_iterator end(){
+      return const_iterator(nullptr);
     }
 
     int size() const{
@@ -163,6 +182,14 @@ class List{
             return old;
         }
 
+bool operator==(iterator& rhs){
+          return current == rhs.current;
+        }
+
+        bool operator!=(iterator& rhs){
+          return !(*this == rhs);
+        }
+
       private:
 
         Node* current;
@@ -191,6 +218,14 @@ class List{
             const_iterator old = *this;
             ++(*this);
             return old;
+        }
+
+        bool operator==(const const_iterator& rhs) const{
+          return current == rhs.current;
+        }
+
+        bool operator!=(const const_iterator& rhs) const{
+          return !(*this == rhs);
         }
 
       private:
