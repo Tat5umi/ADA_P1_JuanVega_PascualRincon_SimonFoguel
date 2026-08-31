@@ -275,5 +275,6 @@ void Reportar(const Motor<Pila>& motor, const Vector<std::string>& erroresLectur
       salida << "elementos en pila Redo: " << motor.TamRedo() << "\n";
       salida << "UNDO/REDO efectivos: " << motor.Efectivos() << "\n";
       salida << "UNDO/REDO no-op: " << motor.NoOps() << "\n";
+}
 
 #endif
