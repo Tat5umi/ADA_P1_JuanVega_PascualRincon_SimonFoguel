@@ -192,6 +192,7 @@ public:
      void HacerUndo(){
            if(undo.empty()){
                  log.push_back("Pila vacia, UNDO sin efecto");
+                 return;
            }
            Registro reg = undo.top();
            undo.pop();
@@ -203,6 +204,7 @@ public:
      void HacerEdo(){
            if(redo.empty()){
                  log.push_back("Pila vacia, REDO sin efecto");
+                 return;
            }
            Registro reg = redo.top();
            redo.pop();
