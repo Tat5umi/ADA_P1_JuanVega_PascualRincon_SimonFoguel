@@ -173,4 +173,24 @@ struct ResultadoLectura {
         return resultado;
  }
 
+class motor {
+public:
+      void AplicarEdicion(const Evento& evento){
+            if (evento.cuantos == 0 && evento.contenido.empty()){
+                  log.push_back("edicion nula, se ignora);
+                  return;
+                        }
+            std::string antes = doc.leer(evento.pos, evento.cuantos);
+            doc.Modificar (evento.pos, evento.cuantos, evento.contenido);
+            undo.push (Registro{evento.op, evento.pos, antes, evento.contenido});
+            redo.clear();
+            }
+
+private: 
+      Documento doc;
+      ArrayStack<Registro> undo;
+      ArrayStack<Registro> redo;
+      Vector<std::string> log;
+};
+
 #endif
