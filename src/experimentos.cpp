@@ -61,7 +61,7 @@ Medicion medir(const Vector<Evento>& eventos){
 void imprimirFila(int n, const std::string& pila, const Medicion& m){
   std::cout << std::setw(9) << n
   << std::setw(10) << pila
-  << std::setw(12) << std::fixed << std::setprecision(2) << m.media
+  << std::setw(12) << std::fixed << std::setprecision(8) << m.media
   << std::setw(12) << m.desviacion
   << std::setw(12) << m.efectivos
   << std::setw(10) << m.noOps << "\n";
