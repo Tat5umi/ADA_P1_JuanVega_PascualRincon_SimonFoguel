@@ -5,11 +5,22 @@
 #include <stdexcept>
 
 enum class TipoOp {Insert, Delete, Replace};
+
 struct Registro{
 TipoOp tipo;
 size_t pos;
 std::string antes;
 std::string despues;
+};
+
+enum class TipoEvento { Edicion, Undo, Redo };
+
+struct Evento{
+TipoEvento clase;
+TipoOp op;
+size_t pos;
+size_t cuantos;
+std::string contenido;
 };
 
 class Documento{
@@ -50,5 +61,7 @@ inline void Deshacer(Documento& doc, const Registro& reg) {
 inline void Rehacer(Documento& doc, const Registro& reg) {
     doc.Modificar (reg.pos, reg.antes.size(), reg.despues);
 }
+
+inline Evento LeerEvento(const std::string& linea);
 
 #endif
