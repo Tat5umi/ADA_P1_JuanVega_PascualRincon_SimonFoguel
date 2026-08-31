@@ -251,7 +251,7 @@ private:
 };
 
 template <typename Pila>
-void Reportar(const Motor<Pila>& motor, const Vector<std::string> erroresLectura, std::ostream& salida){
+void Reportar(const Motor<Pila>& motor, const Vector<std::string>& erroresLectura, std::ostream& salida){
       salida <<"=== ESTADO FINAL DEL DOCUMENTO ===\n";
       salida <<motor.TextoFinal() <<"\n\n";
       
@@ -262,18 +262,18 @@ void Reportar(const Motor<Pila>& motor, const Vector<std::string> erroresLectura
       for (int i = 0; i < erroresLectura.size(); ++i){
             salida << erroresLectura[i] << "\n";
       }
-      salida << "\n"
+      salida << "\n";
 
       salida << "=== LOG DE OPERACIONES ===\n";
-      for (int i = 0, i < motor.Log().size(); ++i){
+      for (int i = 0; i < motor.Log().size(); ++i){
            salida << motor.Log()[i] <<"\n";
       }
       salida << "\n";
 
-      salida <<" === RESUMEN ===\n";
-      salida << "elementos  en pila Undo: " << motor.TamUndo() << "\n";
-      salida << "elementos  en pila Redo: " << motor.TamRedo() << "\n";
-      salida << "UNDO/REDO efectivos: " << motor.efectivos() << "\n";
-      salida << "UNDO/REDO no-op: " << motor.noOps() << "\n";
+      salida <<"=== RESUMEN ===\n";
+      salida << "elementos en pila Undo: " << motor.TamUndo() << "\n";
+      salida << "elementos en pila Redo: " << motor.TamRedo() << "\n";
+      salida << "UNDO/REDO efectivos: " << motor.Efectivos() << "\n";
+      salida << "UNDO/REDO no-op: " << motor.NoOps() << "\n";
 
 #endif
