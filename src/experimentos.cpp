@@ -17,6 +17,7 @@ struct Medicion {
   double desviacion;
   int efectivos;
   int noOps;
+};
 
 template <typename Pila>
 Medicion medir(const Vector<Evento>& eventos){
