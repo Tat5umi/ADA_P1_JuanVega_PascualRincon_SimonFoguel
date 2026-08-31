@@ -1,1 +1,5 @@
-
+# Caso 2 - UNDO sin ediciones previas
+# La pila Undo esta vacia: los tres UNDO deben ser no-op reportados.
+UNDO
+UNDO
+UNDO
