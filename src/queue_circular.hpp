@@ -50,7 +50,7 @@ class CircularQueue{
             return array[end];
          }
 
-        const Object& n{
+        void enqueue(const Object& n){
             if (full()){
                 throw std::runtime_error("attempted enqueue on a full queue");
             }
