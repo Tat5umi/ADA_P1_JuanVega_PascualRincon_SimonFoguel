@@ -58,6 +58,14 @@ class LinkedQueue{
             return ++(myList.begin());
         }
 
+        iterator end(){
+            return myList.end();
+        }
+
+        const_iterator end() const{
+            return myList.end();
+        }
+
     private:
 
         List<Object> myList;
