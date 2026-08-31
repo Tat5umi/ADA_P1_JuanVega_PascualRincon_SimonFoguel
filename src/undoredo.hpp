@@ -104,23 +104,24 @@ inline Evento LeerEvento(const std::string& linea){
                   Evento e;
                   e.clase = TipoEvento::Edicion;
                   e.op = TipoOp::Insert;
-                  e.pos = 0;
-                  e.cuantos = 0;
+                  e.pos = pos;
+                  e.cuantos = cuantos;
+                  e.contenido = contenido;
                   return e; 
             } else if (tipo == "DELETE"){
                   size_t cuantos;
-                  if  (!(cuantos >> tipo)){
+                  if  (!(flujo >> cuantos)){
                         throw std::runtime_error ("falta la cantidad a borrar");
                   }
                   Evento e;
                   e.clase = TipoEvento::Edicion;
                   e.op = TipoOp::Delete;
-                  e.pos = 0;
-                  e.cuantos = 0;
+                  e.pos = pos;
+                  e.cuantos = cuantos;
                   return e; 
             } else if (tipo == "REPLACE") {
                   size_t cuantos;
-                  if  (!(cuantos >> tipo)){
+                  if  (!(flujo >> cuantos)){
                         throw std::runtime_error ("falta la cantidad a remplazar");
                   }
                   std::string contenido;
@@ -131,8 +132,9 @@ inline Evento LeerEvento(const std::string& linea){
                   Evento e;
                   e.clase = TipoEvento::Edicion;
                   e.op = TipoOp::Replace;
-                  e.pos = 0;
-                  e.cuantos = 0;
+                  e.pos = pos;
+                  e.cuantos = cuantos;
+                  e.contenido = contenido;
                   return e; 
             } else {
                   throw std::runtime_error ("tipo de edicion desconocido:" + tipo);
