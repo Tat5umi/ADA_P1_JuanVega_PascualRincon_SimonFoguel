@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <fstream>
+#include <ostream>
 #include "Vector.hpp"
 #include "stack_array.hpp"
 #include "stack_list.hpp"
@@ -192,24 +193,28 @@ public:
      void HacerUndo(){
            if(undo.empty()){
                  log.push_back("Pila vacia, UNDO sin efecto");
+                 ++noOps;
                  return;
            }
            Registro reg = undo.top();
            undo.pop();
            Deshacer(doc, reg);
            redo.push(reg);
+           ++efectivos;
            log.push_back("UNDO aplicado");
      }
 
      void HacerRedo(){
            if(redo.empty()){
                  log.push_back("Pila vacia, REDO sin efecto");
+                 ++noOps;
                  return;
            }
            Registro reg = redo.top();
            redo.pop();
            Rehacer(doc, reg);
            undo.push(reg);
+           ++efectivos;
            log.push_back("REDO aplicado");
      }
 
@@ -233,12 +238,42 @@ public:
      const Vector<std::string>& Log() const {return log;}
      int TamUndo() const {return undo.size();}
      int TamRedo() const {return redo.size();}
+     int Efectivos() const {return efectivos;}
+     int NoOps() const {return noOps;}
 
 private: 
       Documento doc;
       Pila undo;
       Pila redo;
       Vector<std::string> log;
+      int efectivos = 0;
+      int noOps = 0;
 };
+
+template <typename Pila>
+void Reportar(const Motor<Pila>& motor, const Vector<std::string> erroresLectura, std::ostream& salida){
+      salida <<"=== ESTADO FINAL DEL DOCUMENTO ===\n";
+      salida <<motor.TextoFinal() <<"\n\n";
+      
+      salida << "=== ERRORES DE LECTURA ===\n";
+      if (erroresLectura.size() == 0){
+            salida <<"ninguno\n";
+      }
+      for (int i = 0; i < erroresLectura.size(); ++i){
+            salida << erroresLectura[i] << "\n";
+      }
+      salida << "\n"
+
+      salida << "=== LOG DE OPERACIONES ===\n";
+      for (int i = 0, i < motor.Log().size(); ++i){
+           salida << motor.Log()[i] <<"\n";
+      }
+      salida << "\n";
+
+      salida <<" === RESUMEN ===\n";
+      salida << "elementos  en pila Undo: " << motor.TamUndo() << "\n";
+      salida << "elementos  en pila Redo: " << motor.TamRedo() << "\n";
+      salida << "UNDO/REDO efectivos: " << motor.efectivos() << "\n";
+      salida << "UNDO/REDO no-op: " << motor.noOps() << "\n";
 
 #endif
