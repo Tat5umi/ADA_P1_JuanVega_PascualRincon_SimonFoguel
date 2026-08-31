@@ -57,27 +57,27 @@ Medicion medir(const Vector<Evento>& eventos){
   return m;
 }
 
-void imprimirFila(int n, std::string& pila, const Medicion& m){
+void imprimirFila(int n, const std::string& pila, const Medicion& m){
   std::cout << std::setw(9) << n
   << std::setw(10) << pila
   << std::setw(12) << std::fixed << std::setprecision(2) << m.media
   << std::setw(12) << m.desviacion
-  << std::setw(12) << m.efectivo
+  << std::setw(12) << m.efectivos
   << std::setw(10) << m.noOps << "\n";
 }
 
 int main(){
   const int tamanos[] = {1000, 10000, 100000, 1000000};
-  std::cout << std::setw(9) << "n";
-  << std::setw(10) << "pila";
-  << std::setw(12) << "media_ms";
-  << std::setw(12) << "desv_ms";
-  << std::setw(12) << "efectivos";
+  std::cout << std::setw(9) << "n"
+  << std::setw(10) << "pila"
+  << std::setw(12) << "media_ms"
+  << std::setw(12) << "desv_ms"
+  << std::setw(12) << "efectivos"
   << std::setw(10) << "no_ops" << "\n";
 
   for (int t = 0; t < 4; ++t){
-    int n = tamanos[t]
-    std::string ruta = "eventos_n" + std::to_string(n) + ".txt",
+    int n = tamanos[t];
+    std::string ruta = "eventos_n" + std::to_string(n) + ".txt";
 
     try {
       ResultadoLectura datos = LeerArchivo(ruta);
@@ -90,4 +90,4 @@ int main(){
     }
   }
   return 0;
-  }
+  
