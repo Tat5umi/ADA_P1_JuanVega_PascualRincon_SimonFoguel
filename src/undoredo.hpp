@@ -201,7 +201,7 @@ public:
            log.push_back("UNDO aplicado");
      }
 
-     void HacerEdo(){
+     void HacerRedo(){
            if(redo.empty()){
                  log.push_back("Pila vacia, REDO sin efecto");
                  return;
