@@ -137,63 +137,6 @@ Reloj utilizado. Se mide con std::chrono::steady_clock y no con high_resolution_
 
 La lectura del archivo queda fuera del cronómetro. Incluirla mediría el disco, que domina el tiempo por órdenes de magnitud sobre las operaciones de pila. El objeto Motor se construye dentro del bucle de repeticiones, para que cada corrida parta de un documento vacío y pilas vacías, pero antes de arrancar el reloj, para no medir su construcción.
 
-## Resumen de resultados — Problema 1
-
-Cuatro tamaños, cinco repeticiones cada uno, en milisegundos.
-
-| n | pila | media | desv. est. | efectivos | no-op |
-|---|---|---|---|---|---|
-| 1 000 | arreglo | 0.07 | 0.04 | 178 | 79 |
-| 1 000 | lista | 0.07 | 0.01 | 178 | 79 |
-| 10 000 | arreglo | 1.00 | 0.13 | 1 643 | 823 |
-| 10 000 | lista | 0.82 | 0.03 | 1 643 | 823 |
-| 100 000 | arreglo | 13.41 | 1.57 | 16 422 | 8 545 |
-| 100 000 | lista | 13.21 | 1.08 | 16 422 | 8 545 |
-| 1 000 000 | arreglo | 1 908.43 | 228.06 | 164 875 | 84 945 |
-| 1 000 000 | lista | 1 678.49 | 16.92 | 164 875 | 84 945 |
-
-Tres observaciones que el informe desarrolla en detalle:
-
-El crecimiento es superlineal en el número de eventos. De 100 000 a 1 000 000 el tamaño se multiplica por diez y el tiempo por más de ciento cuarenta. La causa no son las pilas, que son O(1) por operación, sino el documento: se representa con std::string y cada edición desplaza la cola del texto, de modo que Modificar es Θ(L) con L el largo del documento. La complejidad total del procesamiento es entonces O(n·L) y no O(n).
-
-Las dos representaciones de pila no se distinguen en esta medición. Con el documento dominando el tiempo, la diferencia entre arreglo y lista queda por debajo del ruido. Medidas de forma aislada, 600 000 operaciones de apilado y desapilado toman unos 82 ms en la versión de arreglo y unos 44 ms en la de lista, menos del 8% del tiempo total de la corrida grande.
-
-La desviación estándar del arreglo es más de diez veces la de la lista en el tamaño mayor. Esa varianza es la firma del crecimiento de capacidad por duplicación: las corridas en las que toca copiar el bloque completo tardan sensiblemente más que las demás. Es evidencia medida del comportamiento amortizado.
-
-## Resumen de resultados — Problema 2
-
-Datos derivados de los cuatro CSV en results/, generados por src/buffer.cpp sobre paquetes_n1000000.txt (semilla 42). Cada experimento corresponde a una fila de data_buffer/parameters.txt.
-
-Configuraciones evaluadas
-
-| Exp. | C (capacidad) | T (ventana, ms) | L (límite por ventana) | R (tasa de servicio) |
-|---|---|---|---|---|
-| 1 | 200 | 1000 | 150 | 500 |
-| 2 | 150 | 800 | 200 | 100 |
-| 3 | 250 | 600 | 150 | 150 |
-| 4 | 100 | 700 | 200 | 700 |
-
-Resultados agregados
-
-Sobre 999 987 paquetes procesados en cada configuración.
-
-| Exp. | Aceptados | Rechazados por búfer lleno | Rechazados por tasa | Ocupación máxima |
-|---|---|---|---|---|
-| 1 | 262 985 (26.3 %) | 0 (0.0 %) | 737 002 (73.7 %) | 14 |
-| 2 | 224 460 (22.4 %) | 775 298 (77.5 %) | 229 (0.0 %) | 150 |
-| 3 | 337 000 (33.7 %) | 661 803 (66.2 %) | 1 184 (0.1 %) | 250 |
-| 4 | 499 666 (50.0 %) | 0 (0.0 %) | 500 321 (50.0 %) | 6 |
-
-Interpretación
-
-Los dos mecanismos de rechazo son casi mutuamente excluyentes. En ninguna configuración ambos actúan de forma apreciable a la vez: o domina el límite de tasa (experimentos 1 y 4) o domina la saturación del búfer (experimentos 2 y 3). Cuál de los dos manda lo decide la relación entre la tasa de servicio R y la tasa de llegada, no los valores de C ni de L por separado.
-
-Cuando R es alta, el búfer nunca se llena. En los experimentos 1 y 4, con R igual a 500 y 700, la ocupación máxima fue de 14 y 6 paquetes frente a capacidades de 200 y 100. El servicio drena el búfer más rápido de lo que llega el tráfico, así que la condición de búfer lleno nunca se alcanza y todo el filtrado recae en el limitador por ventana deslizante.
-
-Cuando R es baja, el búfer se satura y el limitador queda inactivo. En los experimentos 2 y 3, con R igual a 100 y 150, la ocupación máxima alcanzó exactamente la capacidad configurada, 150 y 250, y entre el 66 % y el 77 % de los paquetes se descartaron por saturación. El limitador de tasa apenas rechazó unos cientos, porque los paquetes ya se estaban perdiendo antes de llegar a esa comprobación.
-
-La ocupación máxima igual a C es la evidencia de que el búfer se llenó de verdad. En los experimentos 2 y 3 el valor coincide con la capacidad, lo que confirma que la condición de cola llena se ejercitó y que el descarte por saturación no es teórico. Es el caso límite «búfer exactamente lleno más un paquete adicional» de la Sección 11, observado sobre datos reales y no solo en la prueba dedicada.
-
 ## Casos de prueba
 
 Los siete casos obligatorios de la Sección 11 están en tests/, uno por archivo, en el formato de entrada del Problema 1. Cada archivo lleva comentarios que describen qué verifica.
